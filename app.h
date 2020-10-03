@@ -6,21 +6,14 @@ struct app_data_ {
 	void* ret_f;
 
 	unsigned int current_screen;
-
-	unsigned int switch_1;
-	unsigned int switch_2;
-
-	unsigned int randomValue1;
-	unsigned int randomValue2;
-	unsigned int randomValue3;
+    int mode;
+    int data;
 };
 
 void 	show_screen (void *return_screen);
 void 	key_press_screen();
 int 	dispatch_screen (void *param);
-void 	screen_job();
-void	draw_switch_screen();
-void	draw_buttons_screen();
-void	draw_random_screen();
+void	draw_buttons_screen(int screen);
+void	handle_click(struct gesture_* gest, struct app_data_*	app_data);
 
 #endif

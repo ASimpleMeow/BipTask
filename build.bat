@@ -1,4 +1,5 @@
 @echo off
+@echo off
 @setlocal EnableDelayedExpansion enableextensions
 @cls
 @if not defined COMPILER @SET COMPILER=GNUArmEmbeddedGCC
@@ -9,7 +10,7 @@
 @for /D %%a in ("%PROGRAM_NAME:~0,-1%.txt") do @SET PROGRAM_NAME=%%~na
 	
 :: Путь к компилятору
-@SET BASE_PATH=d:\Dev\AmazfitBip_FW\soft\Patch\GNUArmEmbeddedGCC
+@SET BASE_PATH=C:\dev\bipDev\arm\gcc
 @SET LIBRARY_PATH="!BASE_PATH!\arm-none-eabi\lib\thumb\v7e-m+fp\hard"
 @SET LD_OPT=-lm -lc
 @SET GCC_OPT=-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fno-math-errno 
@@ -39,21 +40,21 @@ SET LABEL = %PROGRAM_NAME%
 )
 
 @call :echoColor 0F "====================================" 1
-@call :echoColor 0F "Наименование проекта: "
+@call :echoColor 0F "Project Name: "
 @echo %PROGRAM_NAME%
 ::@call :echoColor 0F "Отображаемое имя: "
 ::@echo %LABEL%
-@call :echoColor 0F "Компилятор: "
+@call :echoColor 0F "Compiler: "
 @echo %COMPILER%
-@call :echoColor 0F "Базовый путь: "
+@call :echoColor 0F "Base path: "
 @echo %BASE_PATH%
 
 @call :echoColor 0F "====================================" 1
 @echo.	
 
-@call :echoColor 0F "Начинаем сборку..." 1
+@call :echoColor 0F "Initial build" 1
 @SET PARTNAME=%PROGRAM_NAME%
-@call :echoColor 0B "Компиляция "
+@call :echoColor 0B "Compilation"
 @call :echoColor 0E "%PARTNAME%" 1
 
 @SET n=1
@@ -65,10 +66,10 @@ SET LABEL = %PROGRAM_NAME%
 @call :echoColor 0A "...OK" 1
 @SET /a n=n+1)
 @SET /a n=n-1
-@call :echoColor 0B "Итого: "
+@call :echoColor 0B "Result: "
 @call :echoColor 0E "%n%" 1
 
-@call :echoColor 0B "Сборка..."
+@call :echoColor 0B "Linking:"
 %LD% -Map %PARTNAME%.map -o %PROGRAM_NAME%.elf %FILES_TO_COMPILE% %LD_OPT% %LIB_BIP%
 @if errorlevel 1 goto :error
 ::@call :echoColor 0B "."
@@ -85,16 +86,16 @@ if exist name.txt del name.txt
 ::@call :echoColor 0B "."
 
 @call :echoColor 0A "OK" 1
-@call :echoColor 0B "Сборка окончена." 1
+@call :echoColor 0B "Linking done." 1
 
 :done_
 
-@call :echoColor 0A "Готово." 1 
+@call :echoColor 0A "Done." 1 
 pause 
 @goto :EOF
 
 :error
-@call :echoColor 4e ОШИБКА! 1
+@call :echoColor 4e ERROR! 1
 @endlocal & @SET ERROR=ERROR
 @pause
 @goto :EOF
